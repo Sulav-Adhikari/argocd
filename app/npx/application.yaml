@@ -15,6 +15,16 @@ spec:
     repoURL: git@github.com:Sulav-Adhikari/argocd.git
     targetRevision: main
     path: dev
+
+    helm:
+      parameters:
+        - name: "replicaCount"
+          value: "2"
+        - name: "image.repository"
+          value: sulavadk7/private
+        - name: "image.tag"
+          value: npx-v1.0.0
+
   destination: 
     server: https://kubernetes.default.svc
     namespace: npx

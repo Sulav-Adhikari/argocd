@@ -8,8 +8,13 @@ containername: npx
 
 containerport: 3000
 
-imagename: sulavadk7/private:npx-v1.0.0
+# imagename: sulavadk7/private:npx-v1.0.0
 
+image: 
+  repository: sulavadk7/private
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
 
 
 #values for service
@@ -21,4 +26,3 @@ port: 3000       # target port and port value are set to same
 targetPort: 3000 #port on which application is running
 
 nodePort: 31117
-
