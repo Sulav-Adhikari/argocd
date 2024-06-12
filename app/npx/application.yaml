@@ -3,7 +3,7 @@ kind: Application
 metadata:
   name: myapp-argo-application
   annotations:
-    argocd-image-updater.argoproj.io/image-list: main=docker.io/sulavadk7/private
+    argocd-image-updater.argoproj.io/image-list: sulavadk7/private
     argocd-image-updater.argoproj.io/main.update-strategy: latest
     argocd-image-updater.argoproj.io/main.pull-secret: pullsecret:argocd/dockerconfigjson
     argocd-image-updater.argoproj.io/main.allow-tags: ^npx-v[0-9]+\.[0-9]+\.[0-9]+$
@@ -29,7 +29,7 @@ spec:
       values: |
         image:
           repository: sulavadk7/private
-          tag: npx-v1.0.1
+          tag: npx-v1.0.2
         
         service: 
           port: 3000
