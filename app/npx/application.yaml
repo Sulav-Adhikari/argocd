@@ -2,11 +2,20 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: myapp-argo-application
-  namespace: argocd
   annotations:
     argocd-image-updater.argoproj.io/image-list: main=docker.io/sulavadk7/private
     argocd-image-updater.argoproj.io/main.update-strategy: latest
     argocd-image-updater.argoproj.io/main.allow-tags: regexp:^npx-v[0-9]+\.[0-9]+\.[0-9]+$
+    argocd-image-updater.argoproj.io/main.helm.image-name: image.repository
+    argocd-image-updater.argoproj.io/main.helm.image-tag: image.tag
+    # argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/repo-webpoint-internal
+    # argocd-image-updater.argoproj.io/git-branch: main
+  
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  
+  
+  namespace: argocd
 
 spec:
   project: default
@@ -16,14 +25,17 @@ spec:
     targetRevision: main
     path: dev
 
-    helm:
-      parameters:
-        - name: "replicaCount"
-          value: "2"
-        - name: "image.repository"
-          value: sulavadk7/private
-        - name: "image.tag"
-          value: npx-v1.0.0
+    helm: 
+      values: |
+        image:
+          repository: sulavadk7/private
+          tag: npx-v1.0.0
+        
+        service: 
+          port: 3000
+          targetPort: 3000
+          nodePort: 31117
+
 
   destination: 
     server: https://kubernetes.default.svc
