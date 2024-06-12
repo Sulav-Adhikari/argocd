@@ -3,6 +3,10 @@ kind: Application
 metadata:
   name: myapp-argo-application
   namespace: argocd
+  annotations:
+    argocd-image-updater.argoproj.io/image-list: main=docker.io/sulavadk7/private
+    argocd-image-updater.argoproj.io/main.update-strategy: latest
+    argocd-image-updater.argoproj.io/main.allow-tags: regexp:^npx-v[0-9]+\.[0-9]+\.[0-9]+$
 spec:
   project: default
 
