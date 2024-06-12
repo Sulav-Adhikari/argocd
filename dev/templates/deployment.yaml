@@ -20,7 +20,7 @@ spec:
         ports:
         - containerPort: {{ .Values.containerport }}
       imagePullSecrets:
-      - name: regcred  
+      - name: dockerconfigjson  
 ---
 apiVersion: v1
 kind: Service
