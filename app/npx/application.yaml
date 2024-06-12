@@ -29,7 +29,7 @@ spec:
       values: |
         image:
           repository: sulavadk7/private
-          tag: npx-v1.0.0
+          tag: npx-v1.0.1
         
         service: 
           port: 3000
