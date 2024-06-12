@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.labels }}-deployment
+  labels:
+    app: {{ .Values.labels }}
+spec:
+  replicas: {{.Values.replicanumber }}
+  selector:
+    matchLabels:
+      app: {{ .Values.labels }}
+  template:
+    metadata:
+      labels:
+        app: {{.Values.labels }}
+    spec:
+      containers:
+      - name: {{.Values.containername }}
+        image: {{ .Values.imagename }}
+        ports:
+        - containerPort: {{ .Values.containerport }}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.labels }}-service
+spec:
+  type: {{ .Values.servicetype }}
+  selector:
+    app: {{ .Values.labels }}
+  ports:
+    - port: {{ .Values.port }}       # target port and port value are set to same 
+      targetPort: {{.Values.targetPort}} #port on which application is running
+      nodePort: {{.Values.nodePort}}

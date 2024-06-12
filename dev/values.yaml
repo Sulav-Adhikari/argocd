@@ -1,0 +1,22 @@
+# Values for deployment 
+
+labels: nginx
+
+replicanumber: 2
+
+containername: nginx
+
+containerport: 80
+
+imagename: nginx:1.14.2
+
+
+#values for service
+
+servicetype: NodePort
+
+port: 80       # target port and port value are set to same 
+
+targetPort: 80 #port on which application is running
+
+nodePort: 31117
