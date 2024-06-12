@@ -16,11 +16,11 @@ spec:
     spec:
       containers:
       - name: {{.Values.containerName }}
-        image: {{ .Values.image.name }}:{{ .Values.image.tag }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         ports:
         - containerPort: {{ .Values.service.port }}
       imagePullSecrets:
-      - name: regcred  
+      - name: dockerconfigjson 
 ---
 apiVersion: v1
 kind: Service
