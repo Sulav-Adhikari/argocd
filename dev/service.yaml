@@ -9,5 +9,5 @@ spec:
   ports:
     - port: 80       # target port and port value are set to same 
       targetPort: 80 #port on which application is running
-      nodePort: 31117
+      nodePort: 31110
 
