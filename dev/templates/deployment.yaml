@@ -19,7 +19,8 @@ spec:
         image: {{ .Values.imagename }}
         ports:
         - containerPort: {{ .Values.containerport }}
-
+      imagePullSecrets:
+      - name: regcred  
 ---
 apiVersion: v1
 kind: Service

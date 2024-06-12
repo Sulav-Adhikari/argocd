@@ -1,22 +1,24 @@
 # Values for deployment 
 
-labels: nginx
+labels: npx
 
 replicanumber: 2
 
-containername: nginx
+containername: npx
 
-containerport: 80
+containerport: 3000
 
-imagename: nginx:1.14.2
+imagename: sulavadk7/private:npx-v1.0.0
+
 
 
 #values for service
 
 servicetype: NodePort
 
-port: 80       # target port and port value are set to same 
+port: 3000       # target port and port value are set to same 
 
-targetPort: 80 #port on which application is running
+targetPort: 3000 #port on which application is running
 
 nodePort: 31117
+
