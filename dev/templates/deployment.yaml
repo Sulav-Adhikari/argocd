@@ -19,8 +19,13 @@ spec:
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         ports:
         - containerPort: {{ .Values.service.port }}
+
+      {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
-      - name: dockerconfigjson 
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+
+
 ---
 apiVersion: v1
 kind: Service
