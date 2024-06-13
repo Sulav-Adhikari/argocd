@@ -23,18 +23,18 @@ spec:
   source:
     repoURL: git@github.com:Sulav-Adhikari/argocd.git
     targetRevision: main
-    path: dev
+    path: dev-green
 
     helm: 
       values: |
         image:
           repository: sulavadk7/private
-          tag: npx-v1.0.2
+          tag: npx-v1.0.3
         
         service: 
           port: 3000
           targetPort: 3000
-          nodePort: 31117
+          nodePort: 31118
 
         imagePullSecrets:
          - name : dockerconfigjson
