@@ -8,7 +8,7 @@ image:
   repository: sulavadk7/private
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "npx-v"
   
 imagePullSecrets: []
 # nameOverride: ""
