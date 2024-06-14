@@ -7,13 +7,13 @@ metadata:
     argocd-image-updater.argoproj.io/main.update-strategy: latest
     argocd-image-updater.argoproj.io/main.pull-secret: pullsecret:argocd/dockerconfigjson
 #    argocd-image-updater.argoproj.io/main.allow-tags: ^npx-v[0-9]+\\.[0-9]+\\.[0-9]+$
-    argocd-image-updater.argoproj.io/main.allow-tags: regexp:^npx-v[0-9]+\\.[0-9]+\\.[0-9]+$
+    argocd-image-updater.argoproj.io/main.allow-tags: regexp:^npx-sha-[0-9]+$
     argocd-image-updater.argoproj.io/main.helm.image-name: image.repository
     argocd-image-updater.argoproj.io/main.helm.image-tag: image.tag
     argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/argocd-repo-pat
-    argocd-image-updater.argoproj.io/git-branch: main  
+    argocd-image-updater.argoproj.io/git-branch: main
   finalizers:
-    - resources-finalizer.argocd.argoproj.io  
+    - resources-finalizer.argocd.argoproj.io
   namespace: argocd
 
 spec:
@@ -23,13 +23,13 @@ spec:
     targetRevision: main
     path: dev
 
-    helm: 
+    helm:
       values: |
         image:
           repository: registry-1.docker.io/sulavadk7/private
-          tag: npx-v1.0.3
+          tag: npx-sha-0001
         
-        service: 
+        service:
           port: 3000
           targetPort: 3000
           nodePort: 31117
@@ -38,7 +38,7 @@ spec:
          - name : dockerconfigjson
 
 
-  destination: 
+  destination:
     server: https://kubernetes.default.svc
     namespace: npx
 
@@ -49,4 +49,4 @@ spec:
     automated:
       selfHeal: true
       prune: true
-imageimageimageimage
+
