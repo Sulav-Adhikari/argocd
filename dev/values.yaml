@@ -15,8 +15,6 @@ imagePullSecrets: []
 # fullnameOverride: ""
 
 
-#values for service
-
 service: 
   type: NodePort
   port: 3000
