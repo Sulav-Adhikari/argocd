@@ -34,7 +34,7 @@ spec:
           nodePort: 31117
 
         imagePullSecrets:
-         - name : dockerconfigjson
+         - name : dockerhub-secret
 
 
   destination:
