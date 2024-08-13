@@ -1,8 +1,0 @@
-helm:
-  parameters:
-  - name: image.repository
-    value: registry-1.docker.io/sulavadk7/private
-    forcestring: true
-  - name: image.tag
-    value: npx-sha-0001
-    forcestring: true
