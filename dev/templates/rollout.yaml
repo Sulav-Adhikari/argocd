@@ -61,4 +61,4 @@ spec:
     blueGreen:
       activeService: {{ .Values.labels }}-service-active-blue
       previewService: {{ .Values.labels }}-service-preview-green
-      autoPromotionEnabled: false
+      autoPromotionEnabled: true
