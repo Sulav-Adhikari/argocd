@@ -20,5 +20,5 @@ service:
   type: NodePort
   port: 3000
   targetPort: 3000
-  nodePort: 31118
+  nodePort: 31117
 
