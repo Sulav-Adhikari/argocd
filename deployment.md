@@ -1,3 +1,4 @@
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -54,3 +55,4 @@ spec:
     - port: {{ .Values.service.port }}       # target port and port value are set to same 
       targetPort: {{.Values.service.targetPort}} #port on which application is running
       nodePort: {{.Values.service.nodePort}}
+```
