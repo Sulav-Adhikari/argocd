@@ -2,11 +2,12 @@
 
 labels: npx
 containerName: npx
-replicaCount: 1
+replicaCount: 2
+revisionHistoryLimit: 2 #rollout
 
 image: 
   repository: sulavadk7/private
-  pullPolicy: IfNotPresent
+  imagePullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "npx-v"
   

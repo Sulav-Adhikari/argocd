@@ -25,11 +25,27 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
 
+#Blue Service
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.labels }}-service
+  name: {{ .Values.labels }}-service-active-blue
+spec:
+  type: {{ .Values.service.type }}
+  selector:
+    app: {{ .Values.labels }}
+  ports:
+    - port: {{ .Values.service.port }}       # target port and port value are set to same 
+      targetPort: {{.Values.service.targetPort}} #port on which application is running
+      nodePort: {{.Values.service.nodePort}}
+
+#Green Service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.labels }}-service-preview-green
 spec:
   type: {{ .Values.service.type }}
   selector:

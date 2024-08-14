@@ -36,7 +36,6 @@ spec:
         imagePullSecrets:
          - name : dockerhub-secret
 
-
   destination:
     server: https://kubernetes.default.svc
     namespace: npx   #deploy in namespace npx
