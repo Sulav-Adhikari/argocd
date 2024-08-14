@@ -11,7 +11,7 @@ spec:
   ports:
     - port: {{ .Values.service.port }}
       targetPort: {{ .Values.service.targetPort }}
-      nodePort: {{ .Values.service.nodePort }}
+      nodePort: {{ .Values.service.nodePortBlue }}
 
 # Green Service
 ---
@@ -26,7 +26,7 @@ spec:
   ports:
     - port: {{ .Values.service.port }}
       targetPort: {{ .Values.service.targetPort }}
-      nodePort: {{ .Values.service.nodePort }}
+      nodePort: {{ .Values.service.nodePortGreen }}
 
 # Rollout
 ---
@@ -51,10 +51,12 @@ spec:
         imagePullPolicy: {{ .Values.image.imagePullPolicy }}
         ports:
         - containerPort: {{ .Values.service.port }}
+
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+
   strategy:
     blueGreen:
       activeService: {{ .Values.labels }}-service-active-blue

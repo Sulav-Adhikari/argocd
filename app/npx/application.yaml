@@ -31,7 +31,9 @@ spec:
         service:
           port: 3000
           targetPort: 3000
-          nodePort: 31118
+          nodePortBlue: 31118
+          nodePortGreen: 31118
+
 
         imagePullSecrets:
          - name : dockerhub-secret
