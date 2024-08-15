@@ -1,3 +1,5 @@
+```yaml
+# Blue Service
 ---
 apiVersion: v1
 kind: Service
@@ -8,10 +10,24 @@ spec:
   selector:
     app: {{ .Values.labels }}
   ports:
-    - port: {{ .Values.service.port }}       # target port and port value are set to same 
-      targetPort: {{.Values.service.targetPort}} #port on which application is running
-      nodePort: {{.Values.service.nodePort}}
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.targetPort }}
+      nodePort: {{ .Values.service.nodePortBlue }}
 
+# Green Service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.labels }}-service-preview-green
+spec:
+  type: {{ .Values.service.type }}
+  selector:
+    app: {{ .Values.labels }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.targetPort }}
+      nodePort: {{ .Values.service.nodePortGreen }}
 
 # Rollout
 ---
@@ -43,15 +59,8 @@ spec:
       {{- end }}
 
   strategy:
-    canary:
-      maxSurge: "25%"
-      maxUnavailable: 0
-      steps:
-      - setWeight: 50
-      - pause:
-          duration: 10m
-      - setWeight: 20
-      - pause: {}
-      canaryService: {{ .Values.labels }}-canary-service
-      stableService: {{ .Values.labels }}-service
-
+    blueGreen:
+      activeService: {{ .Values.labels }}-service-active-blue
+      previewService: {{ .Values.labels }}-service-preview-green
+      autoPromotionEnabled: true
+```

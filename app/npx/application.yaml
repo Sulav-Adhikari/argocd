@@ -31,8 +31,7 @@ spec:
         service:
           port: 3000
           targetPort: 3000
-          nodePortBlue: 31115
-          nodePortGreen: 31116
+          nodePort: 31118
 
 
         imagePullSecrets:
