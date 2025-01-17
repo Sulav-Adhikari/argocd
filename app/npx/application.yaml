@@ -1,51 +1,51 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: argo-application-npx
-  annotations:
-    argocd-image-updater.argoproj.io/image-list: main=registry-1.docker.io/sulavadk7/private
-    argocd-image-updater.argoproj.io/main.update-strategy: latest
-    argocd-image-updater.argoproj.io/main.pull-secret: pullsecret:argocd/dockerhub-secret
-    argocd-image-updater.argoproj.io/main.allow-tags: regexp:^npx-v[0-9]+\.[0-9]+\.[0-9]+$
-    argocd-image-updater.argoproj.io/main.helm.image-name: image.repository
-    argocd-image-updater.argoproj.io/main.helm.image-tag: image.tag
-    argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/argocd
-    argocd-image-updater.argoproj.io/git-branch: main
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
-  namespace: argocd
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: argo-application-npx
+#   annotations:
+#     argocd-image-updater.argoproj.io/image-list: main=registry-1.docker.io/sulavadk7/private
+#     argocd-image-updater.argoproj.io/main.update-strategy: latest
+#     argocd-image-updater.argoproj.io/main.pull-secret: pullsecret:argocd/dockerhub-secret
+#     argocd-image-updater.argoproj.io/main.allow-tags: regexp:^npx-v[0-9]+\.[0-9]+\.[0-9]+$
+#     argocd-image-updater.argoproj.io/main.helm.image-name: image.repository
+#     argocd-image-updater.argoproj.io/main.helm.image-tag: image.tag
+#     argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/argocd
+#     argocd-image-updater.argoproj.io/git-branch: main
+#   finalizers:
+#     - resources-finalizer.argocd.argoproj.io
+#   namespace: argocd
 
-spec:
-  project: default
-  source:
-    repoURL: git@github.com:Sulav-Adhikari/argocd.git
-    targetRevision: main
-    path: dev
+# spec:
+#   project: default
+#   source:
+#     repoURL: git@github.com:Sulav-Adhikari/argocd.git
+#     targetRevision: main
+#     path: dev
 
-    helm:
-      values: |
-        image:
-          repository: registry-1.docker.io/sulavadk7/private
-          tag: npx-v1.0.0
+#     helm:
+#       values: |
+#         image:
+#           repository: registry-1.docker.io/sulavadk7/private
+#           tag: npx-v1.0.0
         
-        service:
-          port: 3000
-          targetPort: 3000
-          nodePort: 31118
-          nodePortCanary: 31119
+#         service:
+#           port: 3000
+#           targetPort: 3000
+#           nodePort: 31118
+#           nodePortCanary: 31119
 
-        imagePullSecrets:
-         - name : dockerhub-secret
+#         imagePullSecrets:
+#          - name : dockerhub-secret
 
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: npx   #deploy in namespace npx
+#   destination:
+#     server: https://kubernetes.default.svc
+#     namespace: npx   #deploy in namespace npx
 
-  syncPolicy:
-    syncOptions:
-    - CreateNamespace=true #create namespace from above
+#   syncPolicy:
+#     syncOptions:
+#     - CreateNamespace=true #create namespace from above
 
-    automated:
-      selfHeal: true
-      prune: true
+#     automated:
+#       selfHeal: true
+#       prune: true
 

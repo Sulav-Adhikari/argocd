@@ -1,0 +1,84 @@
+replicaCount: 1
+
+redis:
+  fullnameOverride: ""
+  image:
+    repository: redis
+    tag: latest
+  service:
+    type: ClusterIP
+    port: 6379
+  containerPort: 6379
+  ingress:
+    enabled: false
+
+server:
+  fullnameOverride: ""
+  strategy:
+    type: RollingUpdate
+  image:
+    repository: twentycrm/twenty
+    tag: latest
+    pullPolicy: IfNotPresent
+  service:
+    type: NodePort
+    port: 3000
+  ingress:
+    enabled: false
+  env:
+    secretsRef: "twenty-crm-secrets"
+    variables:
+      PG_DATABASE_URL: "postgres://dbuser:password123@db:5432/webpointtwenty"
+      SERVER_URL: "http://localhost:3000"
+      REDIS_URL: "redis://redis:6379"
+      SIGN_IN_PREFILLED: "false"
+      STORAGE_TYPE: "local"
+      STORAGE_S3_REGION: "us-east-1"
+      STORAGE_S3_NAME: "webpointtwenty"
+      STORAGE_S3_ENDPOINT: ""
+      APP_SECRET: "YGbOICvScZtfLjVpabRNh6NPjqdef1CDyDRFKqoEAos="
+
+worker:
+  fullnameOverride: ""
+  strategy:
+    type: RollingUpdate
+  image:
+    repository: twentycrm/twenty
+    tag: latest
+    pullPolicy: IfNotPresent
+  command: ["yarn", "worker:prod"]
+  ingress:
+    enabled: false
+  env:
+    secretsRef: "twenty-crm-secrets"
+    variables:
+      PG_DATABASE_URL: "postgres://dbuser:password123@db:5432/webpointtwenty"
+      SERVER_URL: "http://localhost:3000"
+      REDIS_URL: "redis://redis:6379"
+      SIGN_IN_PREFILLED: "false"
+      STORAGE_TYPE: "local"
+      STORAGE_S3_REGION: "us-east-1"
+      STORAGE_S3_NAME: "webpointtwenty"
+      STORAGE_S3_ENDPOINT: ""
+      APP_SECRET: "YGbOICvScZtfLjVpabRNh6NPjqdef1CDyDRFKqoEAos="
+
+postgresql:
+  image:
+    repository: twentycrm/twenty-postgres-spilo
+    tag: latest
+  service:
+    type: ClusterIP
+    port: 5432
+  env:
+    secretsRef: "twenty-crm-secrets"
+    variables:
+      PGUSER_SUPERUSER: "dbuser"
+      PGPASSWORD_SUPERUSER: "password123"
+      ALLOW_NOSSL: "true"
+      SPILO_PROVIDER: "local"
+    
+  persistence:
+    enabled: true
+    accessModes:
+      - ReadWriteOnce
+    size: 10Gi
