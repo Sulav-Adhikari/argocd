@@ -23,12 +23,12 @@ server:
   service:
     type: NodePort
     port: 3000
+    nodePort: 32000  # Specify a static NodePort
   ingress:
     enabled: false
   env:
     variables:
-      PG_DATABASE_URL: "postgres://postgres:password123@twenty-postgresql:5432/default"
-      SERVER_URL: "http://localhost:3000"
+      SERVER_URL: "http://192.168.122.36:32000"  # Update to use the static NodePort
       REDIS_URL: "redis://twenty-twenty-redis:6379"
       SIGN_IN_PREFILLED: "false"
       STORAGE_TYPE: "local"
@@ -51,7 +51,7 @@ worker:
   env:
     variables:
       PG_DATABASE_URL: "postgres://postgres:password123@twenty-postgresql:5432/default"
-      SERVER_URL: "http://localhost:3000"
+      SERVER_URL: "http://192.168.122.36:32000"
       REDIS_URL: "redis://twenty-twenty-redis:6379"
       SIGN_IN_PREFILLED: "false"
       STORAGE_TYPE: "local"

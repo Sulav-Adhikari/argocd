@@ -11,6 +11,7 @@ spec:
       targetPort: http
       protocol: TCP
       name: http
+      nodePort: {{ .Values.server.service.nodePort }}  # Use the static NodePort
   selector:
     {{- include "twenty.selectorLabels" . | nindent 4 }}
 ---
