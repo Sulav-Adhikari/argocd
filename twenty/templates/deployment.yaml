@@ -48,9 +48,7 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.server.image.repository }}:{{ .Values.server.image.tag }}"
           imagePullPolicy: {{ .Values.server.image.pullPolicy }}
-          envFrom:
-            - secretRef:
-                name: {{ .Values.server.env.secretsRef }}
+
           ports:
             - containerPort: {{ .Values.server.service.port }}
               name: http
@@ -99,9 +97,7 @@ spec:
           image: "{{ .Values.worker.image.repository }}:{{ .Values.worker.image.tag }}"
           imagePullPolicy: {{ .Values.worker.image.pullPolicy }}
           command: {{ .Values.worker.command | toJson }}
-          envFrom:
-            - secretRef:
-                name: {{ .Values.worker.env.secretsRef }}
+
           env:
             - name: PG_DATABASE_URL
               value: {{ .Values.worker.env.variables.PG_DATABASE_URL | quote }}
@@ -149,9 +145,7 @@ spec:
           image: "{{ .Values.postgresql.image.repository }}:{{ .Values.postgresql.image.tag }}"
           ports:
             - containerPort: {{ .Values.postgresql.service.port }}
-          envFrom:
-            - secretRef:
-                name: twenty-crm-secrets
+
           env:
             - name: PGUSER_SUPERUSER
               value: {{ .Values.postgresql.env.variables.PGUSER_SUPERUSER | quote }}

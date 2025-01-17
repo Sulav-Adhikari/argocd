@@ -26,7 +26,6 @@ server:
   ingress:
     enabled: false
   env:
-    secretsRef: "twenty-crm-secrets"
     variables:
       PG_DATABASE_URL: "postgres://dbuser:password123@db:5432/webpointtwenty"
       SERVER_URL: "http://localhost:3000"
@@ -50,7 +49,7 @@ worker:
   ingress:
     enabled: false
   env:
-    secretsRef: "twenty-crm-secrets"
+
     variables:
       PG_DATABASE_URL: "postgres://dbuser:password123@db:5432/webpointtwenty"
       SERVER_URL: "http://localhost:3000"
@@ -70,7 +69,6 @@ postgresql:
     type: ClusterIP
     port: 5432
   env:
-    secretsRef: "twenty-crm-secrets"
     variables:
       PGUSER_SUPERUSER: "dbuser"
       PGPASSWORD_SUPERUSER: "password123"
