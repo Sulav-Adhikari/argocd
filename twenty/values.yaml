@@ -30,7 +30,7 @@ server:
     variables:
       PG_DATABASE_URL: "postgres://dbuser:password123@db:5432/webpointtwenty"
       SERVER_URL: "http://localhost:3000"
-      REDIS_URL: "redis://redis:6379"
+      REDIS_URL: "redis://twenty-twenty-redis:6379"
       SIGN_IN_PREFILLED: "false"
       STORAGE_TYPE: "local"
       STORAGE_S3_REGION: "us-east-1"
@@ -54,7 +54,7 @@ worker:
     variables:
       PG_DATABASE_URL: "postgres://dbuser:password123@db:5432/webpointtwenty"
       SERVER_URL: "http://localhost:3000"
-      REDIS_URL: "redis://redis:6379"
+      REDIS_URL: "redis://twenty-twenty-redis:6379"
       SIGN_IN_PREFILLED: "false"
       STORAGE_TYPE: "local"
       STORAGE_S3_REGION: "us-east-1"
