@@ -27,7 +27,7 @@ server:
     enabled: false
   env:
     variables:
-      PG_DATABASE_URL: "postgres://dbuser:password123@twenty-postgresql:5432/webpointtwenty"
+      PG_DATABASE_URL: "postgres://postgres:password123@twenty-postgresql:5432/default"
       SERVER_URL: "http://localhost:3000"
       REDIS_URL: "redis://twenty-twenty-redis:6379"
       SIGN_IN_PREFILLED: "false"
@@ -50,7 +50,7 @@ worker:
     enabled: false
   env:
     variables:
-      PG_DATABASE_URL: "postgres://dbuser:password123@twenty-postgresql:5432/webpointtwenty"
+      PG_DATABASE_URL: "postgres://postgres:password123@twenty-postgresql:5432/default"
       SERVER_URL: "http://localhost:3000"
       REDIS_URL: "redis://twenty-twenty-redis:6379"
       SIGN_IN_PREFILLED: "false"
