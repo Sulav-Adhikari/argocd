@@ -11,6 +11,8 @@ spec:
     path: apps
     repoURL: git@github.com:Sulav-Adhikari/argocd.git
     targetRevision: HEAD
+    directory:
+      recurse: true
   syncPolicy:
     automated:
       prune: true
