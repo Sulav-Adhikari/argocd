@@ -1,45 +1,51 @@
-# apiVersion: argoproj.io/v1alpha1
-# kind: Application
-# metadata:
-#   name: twenty-crm
-#   namespace: argocd
-#   finalizers:
-#     - resources-finalizer.argocd.argoproj.io
-# spec:
-#   project: default
-#   source:
-#     repoURL: git@github.com:webpoint-solutions-llc/gitops-internals.git
-#     targetRevision: main
-#     path: charts/common/twenty
-#   helm:
-#     values: |
-#       server:
-#         image:
-#           repository: twentycrm/twenty
-#           tag: latest
-#         ingress:
-#           host: "twenty.webpoint.io"
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: twenty-crm
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: git@github.com:webpoint-solutions-llc/gitops-internals.git
+    targetRevision: main
+    path: charts/common/twenty
+  helm:
+    values: |
+      server:
+        image:
+          repository: twentycrm/twenty
+          tag: latest
+        ingress:
+          host: "twenty.webpoint.io"
+        env:
+          secretsRef: "twenty-crm-secrets"
 
-#       worker:
-#         image:
-#           repository: twentycrm/twenty
-#           tag: latest
+      worker:
+        image:
+          repository: twentycrm/twenty
+          tag: latest
+        env:
+          secretsRef: "twenty-crm-secrets"
       
-#       redis:
-#         image:
-#           repository: redis
-#           tag: latest
+      redis:
+        image:
+          repository: redis
+          tag: latest
 
-#       postgresql:
-#         image:
-#           repository: twentycrm/twenty-postgres-spilo
-#           tag: latest
-#   destination:
-#     name: in-cluster
-#     namespace: tools
-#   syncPolicy:
-#     syncOptions:
-#       - CreateNamespace=true
-#     automated:
-#       selfHeal: true
-#       prune: true
+      postgresql:
+        image:
+          repository: twentycrm/twenty-postgres-spilo
+          tag: latest
+        env:
+          secretsRef: "twenty-crm-secrets"
+  destination:
+    name: in-cluster
+    namespace: tools
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      selfHeal: true
+      prune: true

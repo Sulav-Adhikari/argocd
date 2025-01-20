@@ -48,29 +48,12 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.server.image.repository }}:{{ .Values.server.image.tag }}"
           imagePullPolicy: {{ .Values.server.image.pullPolicy }}
-
+          envFrom:
+            - secretRef:
+                name: {{ .Values.server.env.secretsRef }}
           ports:
             - containerPort: {{ .Values.server.service.port }}
               name: http
-          env:
-            - name: PG_DATABASE_URL
-              value: {{ .Values.server.env.variables.PG_DATABASE_URL | quote }}
-            - name: SERVER_URL
-              value: {{ .Values.server.env.variables.SERVER_URL | quote }}
-            - name: REDIS_URL
-              value: {{ .Values.server.env.variables.REDIS_URL | quote }}
-            - name: SIGN_IN_PREFILLED
-              value: {{ .Values.server.env.variables.SIGN_IN_PREFILLED | quote }}
-            - name: STORAGE_TYPE
-              value: {{ .Values.server.env.variables.STORAGE_TYPE | quote }}
-            - name: STORAGE_S3_REGION
-              value: {{ .Values.server.env.variables.STORAGE_S3_REGION | quote }}
-            - name: STORAGE_S3_NAME
-              value: {{ .Values.server.env.variables.STORAGE_S3_NAME | quote }}
-            - name: STORAGE_S3_ENDPOINT
-              value: {{ .Values.server.env.variables.STORAGE_S3_ENDPOINT | quote }}
-            - name: APP_SECRET
-              value: {{ .Values.server.env.variables.APP_SECRET | quote }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
 ---
@@ -97,26 +80,9 @@ spec:
           image: "{{ .Values.worker.image.repository }}:{{ .Values.worker.image.tag }}"
           imagePullPolicy: {{ .Values.worker.image.pullPolicy }}
           command: {{ .Values.worker.command | toJson }}
-
-          env:
-            - name: PG_DATABASE_URL
-              value: {{ .Values.worker.env.variables.PG_DATABASE_URL | quote }}
-            - name: SERVER_URL
-              value: {{ .Values.worker.env.variables.SERVER_URL | quote }}
-            - name: REDIS_URL
-              value: {{ .Values.worker.env.variables.REDIS_URL | quote }}
-            - name: SIGN_IN_PREFILLED
-              value: {{ .Values.worker.env.variables.SIGN_IN_PREFILLED | quote }}
-            - name: STORAGE_TYPE
-              value: {{ .Values.worker.env.variables.STORAGE_TYPE | quote }}
-            - name: STORAGE_S3_REGION
-              value: {{ .Values.worker.env.variables.STORAGE_S3_REGION | quote }}
-            - name: STORAGE_S3_NAME
-              value: {{ .Values.worker.env.variables.STORAGE_S3_NAME | quote }}
-            - name: STORAGE_S3_ENDPOINT
-              value: {{ .Values.worker.env.variables.STORAGE_S3_ENDPOINT | quote }}
-            - name: APP_SECRET
-              value: {{ .Values.worker.env.variables.APP_SECRET | quote }}
+          envFrom:
+            - secretRef:
+                name: {{ .Values.worker.env.secretsRef }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
 ---
@@ -145,16 +111,9 @@ spec:
           image: "{{ .Values.postgresql.image.repository }}:{{ .Values.postgresql.image.tag }}"
           ports:
             - containerPort: {{ .Values.postgresql.service.port }}
-
-          env:
-            - name: PGUSER_SUPERUSER
-              value: {{ .Values.postgresql.env.variables.PGUSER_SUPERUSER | quote }}
-            - name: PGPASSWORD_SUPERUSER
-              value: {{ .Values.postgresql.env.variables.PGPASSWORD_SUPERUSER | quote }}
-            - name: ALLOW_NOSSL
-              value: {{ .Values.postgresql.env.variables.ALLOW_NOSSL | quote }}
-            - name: SPILO_PROVIDER
-              value: {{ .Values.postgresql.env.variables.SPILO_PROVIDER | quote }}
+          envFrom:
+            - secretRef:
+                name: twenty-crm-secrets
           volumeMounts:
             - name: postgresql-data
               mountPath: /home/postgres/pgdata

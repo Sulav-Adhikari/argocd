@@ -21,23 +21,20 @@ server:
     tag: latest
     pullPolicy: IfNotPresent
   service:
-    type: NodePort
+    type: ClusterIP
     port: 3000
-    nodePort: 32000  # Specify a static NodePort
   ingress:
-    enabled: false
+    enabled: true
+    className: "nginx"
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      kubernetes.io/tls-acme: "true"
+      ingress.kubernetes.io/ssl-redirect: "true"
+      cert-manager.io/cluster-issuer: "letsencrypt-issuer"
+    host: ""
   env:
-    variables:
-      PG_DATABASE_URL: "postgres://postgres:password123@twenty-postgresql:5432/default"
+    secretsRef: "twenty-crm-secrets"
 
-      SERVER_URL: "http://192.168.122.36:32000"  # Update to use the static NodePort
-      REDIS_URL: "redis://twenty-twenty-redis:6379"
-      SIGN_IN_PREFILLED: "false"
-      STORAGE_TYPE: "local"
-      STORAGE_S3_REGION: "us-east-1"
-      STORAGE_S3_NAME: "webpointtwenty"
-      STORAGE_S3_ENDPOINT: ""
-      APP_SECRET: "YGbOICvScZtfLjVpabRNh6NPjqdef1CDyDRFKqoEAos="
 
 worker:
   fullnameOverride: ""
@@ -51,16 +48,7 @@ worker:
   ingress:
     enabled: false
   env:
-    variables:
-      PG_DATABASE_URL: "postgres://postgres:password123@twenty-postgresql:5432/default"
-      SERVER_URL: "http://192.168.122.36:32000"
-      REDIS_URL: "redis://twenty-twenty-redis:6379"
-      SIGN_IN_PREFILLED: "false"
-      STORAGE_TYPE: "local"
-      STORAGE_S3_REGION: "us-east-1"
-      STORAGE_S3_NAME: "webpointtwenty"
-      STORAGE_S3_ENDPOINT: ""
-      APP_SECRET: "YGbOICvScZtfLjVpabRNh6NPjqdef1CDyDRFKqoEAos="
+    secretsRef: "twenty-crm-secrets"
 
 postgresql:
   image:
@@ -70,11 +58,7 @@ postgresql:
     type: ClusterIP
     port: 5432
   env:
-    variables:
-      PGUSER_SUPERUSER: "postgres"
-      PGPASSWORD_SUPERUSER: "password123"
-      ALLOW_NOSSL: "true"
-      SPILO_PROVIDER: "local"
+    secretsRef: "twenty-crm-secrets"
     
   persistence:
     enabled: true
