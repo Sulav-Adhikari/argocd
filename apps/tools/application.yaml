@@ -6,7 +6,7 @@ metadata:
     argocd-image-updater.argoproj.io/image-list: main=registry-1.docker.io/sulavadk7/private
     argocd-image-updater.argoproj.io/main.update-strategy: latest
     argocd-image-updater.argoproj.io/main.pull-secret: pullsecret:argocd/dockerhub-secret
-    argocd-image-updater.argoproj.io/main.allow-tags: regexp:^v[0-9]+\.[0-9]+\.[0-9]+$
+    argocd-image-updater.argoproj.io/main.allow-tags: regexp:^npx-v[0-9]+\.[0-9]+\.[0-9]+$
     argocd-image-updater.argoproj.io/main.helm.image-name: image.repository
     argocd-image-updater.argoproj.io/main.helm.image-tag: image.tag
     argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/argocd
@@ -26,7 +26,7 @@ spec:
       values: |
         image:
           repository: registry-1.docker.io/sulavadk7/private
-          tag: v1.0.1
+          tag: npx-v1.0.0
         
         service:
           port: 3000
