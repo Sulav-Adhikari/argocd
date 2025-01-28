@@ -4,9 +4,5 @@ helm:
     value: registry-1.docker.io/sulavadk7/private
     forcestring: true
   - name: image.tag
-<<<<<<< HEAD
     value: npx-v1.0.0
-=======
-    value: npx-v1.0.1
->>>>>>> 1ce18d6 (chore:iu)
     forcestring: true
