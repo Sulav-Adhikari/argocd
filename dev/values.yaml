@@ -20,8 +20,8 @@ service:
   type: NodePort
   port: 3000
   targetPort: 3000
-  nodePort: 31117
-  nodePortCanary: 31117
-  # nodePortBlue: 31117
-  # nodePortGreen: 3117
+  # nodePort: 31117
+  # nodePortCanary: 31117
+  nodePortBlue: 31117
+  nodePortGreen: 3117
 
