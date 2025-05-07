@@ -1,9 +1,8 @@
 # apiVersion: argoproj.io/v1alpha1
 # kind: Application
 # metadata:
-#   name: argo-application-npx
+#   name: percona-pg
 #   annotations:
-#     argocd-image-updater.argoproj.io/image-list: main=registry-1.docker.io/samirkoirala/goapp
 #     argocd-image-updater.argoproj.io/main.update-strategy: latest
 #     argocd-image-updater.argoproj.io/main.pull-secret: pullsecret:argocd/dockerhub-secret
 #     argocd-image-updater.argoproj.io/main.allow-tags: regexp:[0-9]+\.[0-9]+\.[0-9]+$
@@ -18,28 +17,19 @@
 # spec:
 #   project: default
 #   source:
-#     repoURL: git@github.com:Sulav-Adhikari/argocd.git
-#     targetRevision: main
-#     path: dev
-
+#     repoURL: https://percona.github.io/percona-helm-charts/
+#     targetRevision: 2.6.0
+#     chart: pg-operator
 #     helm:
 #       values: |
-#         image:
-#           repository: registry-1.docker.io/sulavadk7/private
-#           tag: 1.0.1
-        
-#         service:
-#           port: 3000
-#           targetPort: 3000
-#           nodePort: 31118doc
-#           nodePortCanary: 31119
-
-#         imagePullSecrets:
-#          - name : dockerhub-secret
+#         patroni:
+#           dynamicConfiguration:
+#             synchronousMode: on
+#             synchronous_node_count: 1
 
 #   destination:
 #     server: https://kubernetes.default.svc
-#     namespace: npx   #deploy in namespace npx
+#     namespace: percona-operator   #deploy in namespace npx
 
 #   syncPolicy:
 #     syncOptions:
